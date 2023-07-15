@@ -16,16 +16,27 @@ export const menuItems = [
     link: "staff",
   },
   {
-    title: "Membership",
+    title: "Member",
     icon: "heroicons-outline:identification",
     link: "member",
   },
   
   {
-    title: "Service",
+    title: "Asset",
     icon: "heroicons-outline:folder-open",
-    link: "service",
+    link: "asset",
   },
+  {
+    title: "Package",
+    icon: "heroicons-outline:calendar",
+    link: "package",
+  },
+  {
+    title: "Transaction",
+    icon: "heroicons-outline:currency-dollar",
+    link: "transaction",
+  },
+
 ];
 
 export const topMenu = [

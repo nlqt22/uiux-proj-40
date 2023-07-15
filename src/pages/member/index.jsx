@@ -1,20 +1,36 @@
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import MemberList from "./MemberList";
 
 import TableLoading from "@/components/skeleton/Table";
+import { fetchMembers } from "./store";
 
 
 const MemberListPage = () =>  {
-    const { width, breakpoints } = useWidth();
-    const { memberrs } = useSelector((state) => state.members);
-    const dispatch = useDispatch;
+    const { members, status, error } = useSelector((state) => state.members);
 
-    return (
-        <div>
-            <TableLoading count={members?.length} />
+    const dispatch = useDispatch();
 
-            <MemberList members={members} />
-        </div>
-    )
-}
+    useEffect(() => {
+        dispatch(fetchMembers({page: 0, size: 5}));
+    }, [dispatch]);
+
+    if(status === "loading") {
+        return (
+            <div>
+                <TableLoading count={members?.length}/>
+            </div>
+        );
+    }
+
+    if(status === "succeeded") {
+        return (
+            <div>
+                <MemberList members={ members } />
+            </div>
+        );
+    }
+};
+
+export default MemberListPage;

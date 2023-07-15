@@ -1,9 +1,9 @@
 import layout from "./layout";
 
-import member from "../pages/member/store";
+import members from "../pages/member/store";
 
 const rootReducer = {
   layout,
-  member,
+  members,
 };
 export default rootReducer;
