@@ -52,10 +52,10 @@ const AssetList = ({assets}) => {
                                 return (
                                     <tr key={assets.id} className=" even:bg-slate-100 dark:even:bg-slate-700">
                                         <td className="table-td">
-                                            { assets.fullName }
+                                            { assets.name }
                                         </td>
                                         <td className="table-td">
-                                            { assets.phone }
+                                            { assets.status }
                                         </td>
                                         <td className="table-td">
                                             <div className="divide-y divide-slate-100 dark:divide-slate-800">

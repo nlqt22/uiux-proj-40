@@ -17,10 +17,29 @@ export const memberSlice = createSlice({
     name: "members",
     initialState: {
         status: "idle",
+        openMemberModal: false,
         error: null,
         members: [],
     },
-    reducers: {},
+    reducers: {
+        toggleAddModal: (state, action) => {
+            state.openMemberModal = action.payload;
+          },
+          pushMember: (state, action) => {
+            state.members.unshift(action.payload);
+      
+            toast.success("Add Successfully", {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMembers.pending, (state) => {
@@ -36,5 +55,8 @@ export const memberSlice = createSlice({
             });
     },
 });
-export const {}  = memberSlice.actions;
+export const {
+    toggleAddModal,
+    pushMember,
+}  = memberSlice.actions;
 export default memberSlice.reducer;

@@ -6,6 +6,8 @@ import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
 import { fetchMembers } from "./store";
 import { ToastContainer } from "react-toastify";
+import { toggleAddModal } from "./store";
+import AddMember from "./AddMember";
 
 
 const MemberListPage = () =>  {
@@ -42,16 +44,20 @@ const MemberListPage = () =>  {
                     >
                         <Button
                             icon="heroicons-outline:plus"
-                            text="Add Project"
+                            text="Add Member"
                             className="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
                             iconClass=" text-lg"
+                            onClick={() => dispatch(toggleAddModal(true))}
                         />
                     </div>
                 </div>
                 <MemberList members={ members } />
+                <AddMember />
             </div>
+            
         );
     }
+
 };
 
 export default MemberListPage;
