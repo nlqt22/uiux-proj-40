@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
 	const scrollableNodeRef = useRef();
 	const [scroll, setScroll] = useState(false);
-	const { user } = useSelector((state) => state.auth);
+	const { user, isAuth } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const handleScroll = () => {

@@ -7,6 +7,9 @@ import TableLoading from "@/components/skeleton/Table";
 import { fetchMembers } from "./store";
 import { ToastContainer } from "react-toastify";
 import { Navigate } from "react-router-dom";
+import AddMember from "./AddMember";
+import { toggleAddModal } from "./store";
+
 
 
 const MemberListPage = () =>  {
@@ -50,10 +53,12 @@ const MemberListPage = () =>  {
                                 text="Add member"
                                 className="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
                                 iconClass=" text-lg"
+                                onClick={() => dispatch(toggleAddModal(true))}
                             />
                         </div>
                     </div>
                     <MemberList members={ members } />
+                    <AddMember />
                 </div>
             );
         }

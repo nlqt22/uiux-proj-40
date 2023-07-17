@@ -9,6 +9,7 @@ const Dashboard = () => {
 
 	if(!isAuth) {
 		return <Navigate to="/login"/>;
+		
 	} else {
 		return (
 			<div>
