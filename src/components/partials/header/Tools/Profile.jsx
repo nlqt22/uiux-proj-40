@@ -4,11 +4,12 @@ import Icon from "@/components/ui/Icon";
 import { Menu, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { handleLogout } from "../../../../pages/auth/common/store";
 
 import UserAvatar from "@/assets/images/all-img/user.png";
 
 const profileLabel = () => {
-  return (
+  	return (
     <div className="flex items-center">
       <div className="flex-1 ltr:mr-[10px] rtl:ml-[10px]">
         <div className="lg:h-8 lg:w-8 h-7 w-7 rounded-full">
@@ -80,18 +81,19 @@ const Profile = () => {
       },
     },
     {
-      label: "Faq",
-      icon: "heroicons-outline:information-circle",
-      action: () => {
-        console.log("faq");
-      },
+      	label: "Faq",
+      	icon: "heroicons-outline:information-circle",
+      	action: () => {
+        	console.log("faq");
+      	},
     },
     {
-      label: "Logout",
-      icon: "heroicons-outline:login",
-      action: () => {
-        console.log("logout");
-      },
+      	label: "Logout",
+      	icon: "heroicons-outline:login",
+      	action: () => {
+        	dispatch(handleLogout());
+			navigate("/login");
+      	},
     },
   ];
 

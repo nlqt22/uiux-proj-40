@@ -6,7 +6,6 @@ const API = "http://localhost:8080/api/v1/members";
 export const fetchMembers = createAsyncThunk("members/fetchMembers", async({ page, size }) => {
     try {
         const response = await axios.get(`${API}?page=${page}&size=${size}`);
-        console.log(response);
         return response.data.content;
     } catch(error) {
         throw error;
