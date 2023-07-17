@@ -18,6 +18,7 @@ export const memberSlice = createSlice({
     initialState: {
         status: "idle",
         openMemberModal: false,
+        isLoading: null,
         error: null,
         members: [],
     },
@@ -25,7 +26,7 @@ export const memberSlice = createSlice({
         toggleAddModal: (state, action) => {
             state.openMemberModal = action.payload;
           },
-          pushMember: (state, action) => {
+        pushMember: (state, action) => {
             state.members.unshift(action.payload);
       
             toast.success("Add Successfully", {

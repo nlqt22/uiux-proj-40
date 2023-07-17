@@ -11,10 +11,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 
-import avatar1 from "@/assets/images/avatar/av-1.svg";
-import avatar2 from "@/assets/images/avatar/av-2.svg";
-import avatar3 from "@/assets/images/avatar/av-3.svg";
-import avatar4 from "@/assets/images/avatar/av-4.svg";
 import FormGroup from "@/components/ui/FormGroup";
 
 const styles = {
@@ -35,37 +31,9 @@ const styles = {
   }),
 };
 
-const assigneeOptions = [
-  { value: "mahedi", label: "Mahedi Amin", image: avatar1 },
-  { value: "sovo", label: "Sovo Haldar", image: avatar2 },
-  { value: "rakibul", label: "Rakibul Islam", image: avatar3 },
-  { value: "pritom", label: "Pritom Miha", image: avatar4 },
-];
-const options = [
-  {
-    value: "team",
-    label: "team",
-  },
-  {
-    value: "low",
-    label: "low",
-  },
-  {
-    value: "medium",
-    label: "medium",
-  },
-  {
-    value: "high",
-    label: "high",
-  },
-  {
-    value: "update",
-    label: "update",
-  },
-];
+
 
 const OptionComponent = ({ data, ...props }) => {
-  //const Icon = data.icon;
 
   return (
     <components.Option {...props}>
@@ -88,22 +56,19 @@ const OptionComponent = ({ data, ...props }) => {
 const AddMember = () => {
   const { openMemberModal } = useSelector((state) => state.members);
   const dispatch = useDispatch();
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [dob, setStartDate] = useState(new Date());
+
 
   const FormValidationSchema = yup
     .object({
       title: yup.string().required("Title is required"),
       assign: yup.mixed().required("Assignee is required"),
       tags: yup.mixed().required("Tag is required"),
-      startDate: yup
+      dob: yup
         .date()
-        .required("Start date is required")
-        .min(new Date(), "Start date must be greater than today"),
-      endDate: yup
-        .date()
-        .required("End date is required")
-        .min(new Date(), "End date must be greater than today"),
+        .required("Date of birth is required")
+        .max(new Date(), "Start date must be lower than today"),
+
     })
     .required();
 
@@ -119,18 +84,14 @@ const AddMember = () => {
   });
 
   const onSubmit = (data) => {
+    console.log("gg");
     const member = {
       id: uuidv4(),
       name: data.title,
-      assignee: data.assign,
-      // get only data value from startDate and endDate
-      category: null,
-      startDate: startDate.toISOString().split("T")[0],
-      endDate: endDate.toISOString().split("T")[0],
-      des: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
-      progress: Math.floor(Math.random() * (100 - 10 + 1) + 10),
+      phone: data.phone,
+      dob: dob.toISOString().split("T")[0],
+      identity: data.identity,
     };
-
     dispatch(pushMember(member));
     dispatch(toggleAddModal(false));
     reset();
@@ -147,26 +108,32 @@ const AddMember = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
           <Textinput
             name="title"
-            label="Member Name"
-            placeholder="Member Name"
+            label="Member Full Name"
+            placeholder="Member Full Name"
             register={register}
             error={errors.title}
           />
-          <div className="grid lg:grid-cols-2 gap-4 grid-cols-1">
-            <FormGroup
-              label="Start Date"
+          <Textinput
+            name="phone"
+            label="Phone"
+            placeholder="0123456789"
+            register={register}
+            error={errors.title}
+          />
+          <FormGroup
+              label="Date of Birth"
               id="default-picker"
-              error={errors.startDate}
+              error={errors.dob}
             >
               <Controller
-                name="startDate"
+                name="dob"
                 control={control}
                 render={({ field }) => (
                   <Flatpickr
                     className="form-control py-2"
                     id="default-picker"
                     placeholder="yyyy, dd M"
-                    value={startDate}
+                    value={dob}
                     onChange={(date) => {
                       field.onChange(date);
                     }}
@@ -179,89 +146,14 @@ const AddMember = () => {
                 )}
               />
             </FormGroup>
-            <FormGroup
-              label="End Date"
-              id="default-picker2"
-              error={errors.endDate}
-            >
-              <Controller
-                name="endDate"
-                control={control}
-                render={({ field }) => (
-                  <Flatpickr
-                    className="form-control py-2"
-                    id="default-picker2"
-                    placeholder="yyyy, dd M"
-                    value={endDate}
-                    onChange={(date) => {
-                      field.onChange(date);
-                    }}
-                    options={{
-                      altInput: true,
-                      altFormat: "F j, Y",
-                      dateFormat: "Y-m-d",
-                    }}
-                  />
-                )}
-              />
-            </FormGroup>
-          </div>
-          <div className={errors.assign ? "has-error" : ""}>
-            <label className="form-label" htmlFor="icon_s">
-              Assignee
-            </label>
-            <Controller
-              name="assign"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={assigneeOptions}
-                  styles={styles}
-                  className="react-select"
-                  classNamePrefix="select"
-                  isMulti
-                  components={{
-                    Option: OptionComponent,
-                  }}
-                  id="icon_s"
-                />
-              )}
-            />
-            {errors.assign && (
-              <div className=" mt-2  text-danger-500 block text-sm">
-                {errors.assign?.message || errors.assign?.label.message}
-              </div>
-            )}
-          </div>
-
-          <div className={errors.tags ? "has-error" : ""}>
-            <label className="form-label" htmlFor="icon_s">
-              Tag
-            </label>
-            <Controller
-              name="tags"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  options={options}
-                  styles={styles}
-                  className="react-select"
-                  classNamePrefix="select"
-                  isMulti
-                  id="icon_s"
-                />
-              )}
-            />
-            {errors.assign && (
-              <div className=" mt-2  text-danger-500 block text-sm">
-                {errors.tags?.message || errors.tags?.label.message}
-              </div>
-            )}
-          </div>
-          <Textarea label="Description" placeholder="Description" />
-
+          <Textinput
+            name="identity"
+            label="Identity Card"
+            placeholder="12345678909"
+            register={register}
+            error={errors.title}
+          />
+          
           <div className="ltr:text-right rtl:text-left">
             <button className="btn btn-dark  text-center">Add</button>
           </div>
