@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useWidth from "@/hooks/useWidth";
-import PackageList from "./PackageList";
+import AssetList from "./AssetList";
 import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
-import { fetchPackages } from "./store";
+import { fetchAssets } from "./store";
 import { ToastContainer } from "react-toastify";
 
 
-const PackageListPage = () =>  {
-    const { packages, status, error } = useSelector((state) => state.packages);
+const AssetListPage = () =>  {
+    const { assets, status, error } = useSelector((state) => state.assets);
     const { width, breakpoints } = useWidth();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchPackages({page: 0, size: 5}));
+        dispatch(fetchAssets({page: 0, size: 5}));
     }, [dispatch]);
 
     if(status === "loading") {
         return (
             <div>
-                <TableLoading count={packages?.length}/>
+                <TableLoading count={assets?.length}/>
             </div>
         );
     }
@@ -32,7 +32,7 @@ const PackageListPage = () =>  {
                 <ToastContainer />
                 <div className="flex flex-wrap justify-between items-center mb-4">
                     <h4 className="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
-                        Packages
+                        Assets
                     </h4>
                     <div
                         className={`${
@@ -42,16 +42,16 @@ const PackageListPage = () =>  {
                     >
                         <Button
                             icon="heroicons-outline:plus"
-                            text="Add Package"
+                            text="Add Asset"
                             className="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
                             iconClass=" text-lg"
                         />
                     </div>
                 </div>
-                <PackageList packages={ packages } />
+                <AssetList assets={ assets } />
             </div>
         );
     }
 };
 
-export default PackageListPage;
+export default AssetListPage;

@@ -32,26 +32,6 @@ const styles = {
 
 
 
-const OptionComponent = ({ data, ...props }) => {
-
-    return (
-        <components.Option {...props}>
-            <span className="flex items-center space-x-4">
-                <div className="flex-none">
-                    <div className="h-7 w-7 rounded-full">
-                        <img
-                            src={data.image}
-                            alt=""
-                            className="w-full h-full rounded-full"
-                        />
-                    </div>
-                </div>
-                <span className="flex-1">{data.label}</span>
-            </span>
-        </components.Option>
-    );
-};
-
 const AddMember = () => {
     const { openMemberModal } = useSelector((state) => state.members);
     const dispatch = useDispatch();
