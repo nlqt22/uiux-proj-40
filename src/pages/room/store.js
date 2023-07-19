@@ -2,32 +2,32 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API = "http://localhost:8080/api/v1/packages";
+const API = "http://localhost:8080/api/v1/rooms";
 
-export const fetchPackages = createAsyncThunk("packages/fetchPackages", async({ page, size }) => {
+export const fetchRooms = createAsyncThunk("rooms/fetchRooms", async ({ page, size }) => {
     try {
         const response = await axios.get(`${API}?page=${page}&size=${size}`);
-        console.log(response);
         return response.data.content;
-    } catch(error) {
+    } catch (error) {
         throw error;
     }
 });
 
-export const packageSlice = createSlice({
-    name: "packages",
+export const roomSlice = createSlice({
+    name: "rooms",
     initialState: {
         status: "idle",
-        openPackageModal: false,
+        openRoomModal: false,
+        isLoading: null,
         error: null,
-        packages: [],
+        rooms: [],
     },
     reducers: {
         toggleAddModal: (state, action) => {
-            state.openPackageModal = action.payload;
+            state.openRoomModal = action.payload;
         },
-        pushPackage: (state, action) => {
-            state.packages.unshift(action.payload);
+        pushRoom: (state, action) => {
+            state.rooms.unshift(action.payload);
 
             toast.success("Add Successfully", {
                 position: "top-right",
@@ -43,14 +43,14 @@ export const packageSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchPackages.pending, (state) => {
+            .addCase(fetchRooms.pending, (state) => {
                 state.status = "loading";
             })
-            .addCase(fetchPackages.fulfilled, (state, action) => {
+            .addCase(fetchRooms.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.packages = action.payload;
+                state.rooms = action.payload;
             })
-            .addCase(fetchPackages.rejected, (state, action) => {
+            .addCase(fetchRooms.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.error.message;
             });
@@ -58,6 +58,6 @@ export const packageSlice = createSlice({
 });
 export const {
     toggleAddModal,
-    pushPackage,
-}  = packageSlice.actions;
-export default packageSlice.reducer;
+    pushRoom,
+} = roomSlice.actions;
+export default roomSlice.reducer;

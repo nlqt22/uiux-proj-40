@@ -1,33 +1,35 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useWidth from "@/hooks/useWidth";
-import StaffList from "./StaffList";
+import RoomList from "./RoomList";
 import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
-import { fetchStaffs } from "./store";
-import AddStaff from "./AddStaff";
+import { fetchRooms } from "./store";
 import { ToastContainer } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import AddRoom from "./AddRoom";
 import { toggleAddModal } from "./store";
 
 
-const StaffListPage = () =>  {
-    const { staffs, status, error } = useSelector((state) => state.staffs);
+
+const RoomListPage = () =>  {
+    const { rooms, status, error } = useSelector((state) => state.rooms);
     const { width, breakpoints } = useWidth();
 
     const { isAuth } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchStaffs({page: 0, size: 5}));
+        dispatch(fetchRooms({page: 0, size: 5}));
     }, [dispatch]);
+
     if(!isAuth) {
 		return <Navigate to="/login"/>;
-    }
-    else {
+    } else {
         if(status === "loading") {
             return (
                 <div>
-                    <TableLoading count={staffs?.length}/>
+                    <TableLoading count={rooms?.length}/>
                 </div>
             );
         }
@@ -38,7 +40,7 @@ const StaffListPage = () =>  {
                     <ToastContainer />
                     <div className="flex flex-wrap justify-between items-center mb-4">
                         <h4 className="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
-                            Staffs
+                            Rooms
                         </h4>
                         <div
                             className={`${
@@ -48,19 +50,19 @@ const StaffListPage = () =>  {
                         >
                             <Button
                                 icon="heroicons-outline:plus"
-                                text="Add Staff"
+                                text="Add room"
                                 className="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
                                 iconClass=" text-lg"
                                 onClick={() => dispatch(toggleAddModal(true))}
                             />
                         </div>
                     </div>
-                    <StaffList staffs={ staffs } />
-                    <AddStaff />
+                    <RoomList rooms={ rooms } />
+                    <AddRoom />
                 </div>
             );
         }
     }
 };
 
-export default StaffListPage;
+export default RoomListPage;

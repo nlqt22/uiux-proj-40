@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useWidth from "@/hooks/useWidth";
 import AssetList from "./AssetList";
+import AddAsset from "./AddAsset"
 import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
 import { fetchAssets } from "./store";
 import { ToastContainer } from "react-toastify";
+import { toggleAddModal } from "./store";
 
 
 const AssetListPage = () =>  {
@@ -13,6 +15,8 @@ const AssetListPage = () =>  {
     const { width, breakpoints } = useWidth();
 
     const dispatch = useDispatch();
+    const { isAuth } = useSelector((state) => state.auth)
+
 
     useEffect(() => {
         dispatch(fetchAssets({page: 0, size: 5}));
@@ -45,10 +49,12 @@ const AssetListPage = () =>  {
                             text="Add Asset"
                             className="btn-dark dark:bg-slate-800  h-min text-sm font-normal"
                             iconClass=" text-lg"
+                            onClick={() => dispatch(toggleAddModal(true))}
                         />
                     </div>
                 </div>
                 <AssetList assets={ assets } />
+                <AddAsset />
             </div>
         );
     }

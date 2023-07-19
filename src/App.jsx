@@ -11,6 +11,8 @@ const MemberListPage = lazy(() => import("./pages/member"));
 const PackageListPage = lazy(() => import ("./pages/package"));
 const StaffListPage  = lazy(() => import ("./pages/staff"));
 const AssetListPage  = lazy(() => import ("./pages/asset"));
+const StatisticPage  = lazy(() => import ("./pages/statistic"));
+const StaffDetailsPage  = lazy(() => import ("./pages/staff/StaffDetail"));
 const Login = lazy(() => import("./pages/auth/login"));
 const Error = lazy(() => import("./pages/404"));
 
@@ -42,14 +44,7 @@ function App() {
 						}
 					/>
 
-					<Route
-						path="member"
-						element={
-							<Suspense fallback={<Loading />}>
-								<MemberListPage />
-							</Suspense>
-						}
-					/>
+
 
 					<Route
 						path="package"
@@ -59,12 +54,27 @@ function App() {
 							</Suspense>
 						}
 					/>
-
+					<Route
+						path="member"
+						element={
+							<Suspense fallback={<Loading />}>
+								<MemberListPage />
+							</Suspense>
+						}
+					/>
 					<Route
 						path="staff"
 						element={
 							<Suspense fallback={<Loading />}>
 								<StaffListPage />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="staff/:id"
+						element={
+							<Suspense fallback={<Loading />}>
+								<StaffDetailsPage />
 							</Suspense>
 						}
 					/>
@@ -74,6 +84,14 @@ function App() {
 						element={
 							<Suspense fallback={<Loading />}>
 								<AssetListPage />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="transaction"
+						element={
+							<Suspense fallback={<Loading />}>
+								<StatisticPage />
 							</Suspense>
 						}
 					/>
