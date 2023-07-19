@@ -15,6 +15,13 @@ const RoomList = ({rooms}) => {
             },
         },
         {
+            name: "view",
+            icon: "heroicons:eye",
+            doit: (room) => {
+                  navigate(`/room/${room.id}`)
+            },
+          },
+        {
             name: "delete",
             icon: "heroicons-outline:trash",
             doit: (id) => {
@@ -38,15 +45,7 @@ const RoomList = ({rooms}) => {
                                 <th scope="col" className=" table-th">
                                     Name
                                 </th>
-                                <th scope="col" className=" table-th">
-                                    Phone
-                                </th>
-                                <th scope="col" className=" table-th">
-                                    Identity Card
-                                </th>
-                                <th scope="col" className=" table-th">
-                                    Date of birth
-                                </th>
+                               
                                 <th scope="col" className=" table-th">
                                     Action
                                 </th>
@@ -58,24 +57,16 @@ const RoomList = ({rooms}) => {
                                 return (
                                     <tr key={room.id} className=" even:bg-slate-100 dark:even:bg-slate-700">
                                         <td className="table-td">
-                                            { room.fullName }
+                                            { room.Name }
                                         </td>
-                                        <td className="table-td">
-                                            { room.phone }
-                                        </td>
-                                        <td className="table-td">
-                                            { room.identityCard }
-                                        </td>
-                                        <td className="table-td">
-                                            { room.dob }
-                                        </td>
+                                        
                                         <td className="table-td">
                                             <div className="divide-y divide-slate-100 dark:divide-slate-800">
                                                 <div className="flex space-x-2 items-center rtl:space-x-reverse">
                                                     {actions.map((item, i) => (
                                                         <div
                                                             key={i}
-                                                            onClick={() => item.doit()}
+                                                            onClick={() => item.doit(room)}
                                                             className={`
                                                                 ${
                                                                     item.icon === "heroicons-outline:trash"

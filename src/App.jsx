@@ -15,8 +15,10 @@ const AssetListPage  = lazy(() => import ("./pages/asset"));
 
 const StaffDetailsPage  = lazy(() => import ("./pages/staff/StaffDetail"));
 const MemberDetailsPage  = lazy(() => import ("./pages/member/MemberDetail"));
+const RoomDetailsPage  = lazy(() => import ("./pages/room/RoomDetail"));
+const PackageDetailsPage  = lazy(() => import ("./pages/package/PackageDetail"));
 
-
+const FeedbackPage = lazy(() => import("./pages/feedback"));
 const Login = lazy(() => import("./pages/auth/login"));
 const Error = lazy(() => import("./pages/404"));
 
@@ -82,6 +84,23 @@ function App() {
 							</Suspense>
 						}
 					/>
+
+					<Route
+						path="room/:id"
+						element={
+							<Suspense fallback={<Loading />}>
+								<RoomDetailsPage />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="package/:id"
+						element={
+							<Suspense fallback={<Loading />}>
+								<PackageDetailsPage />
+							</Suspense>
+						}
+					/>
 					<Route
 						path="member/:id"
 						element={
@@ -104,6 +123,14 @@ function App() {
 						element={
 							<Suspense fallback={<Loading />}>
 								<RoomListPage />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="feedback"
+						element={
+							<Suspense fallback={<Loading />}>
+								<FeedbackPage />
 							</Suspense>
 						}
 					/>

@@ -4,37 +4,24 @@ import Icon from "@/components/ui/Icon";
 
 import { useNavigate } from "react-router-dom";
 
-const PackageList = ({packages}) => {
+const PackageListStaff = ({feedbacks_staff}) => {
     const navigate = useNavigate();
     const actions = [
         {
-            name: "edit",
-            icon: "heroicons:pencil-square",
-            doit: () => {
-                return null;
-            },
-        },
-        {
             name: "view",
             icon: "heroicons:eye",
-            doit: (package1) => {
-                  navigate(`/package/${package1.id}`)
+            doit: () => {
+
             },
           },
-        {
-            name: "delete",
-            icon: "heroicons-outline:trash",
-            doit: (id) => {
-                return null;
-            },
-        },
+
     ];
 
     return (
         <>
             <Card noborder>
             <div className="md:flex justify-between items-center mb-6">
-                <h4 className="card-title">Packages List</h4>
+                <h4 className="card-title">Feedbacks List</h4>
             </div>
             <div className="overflow-x-auto -mx-6">
                 <div className="inline-block min-w-full align-middle">
@@ -58,17 +45,17 @@ const PackageList = ({packages}) => {
                         </thead>
 
                         <tbody className="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                            { packages.map((package1) => {
+                            { feedbacks_staff.map((feedback1) => {
                                 return (
-                                    <tr key={package1.id} className=" even:bg-slate-100 dark:even:bg-slate-700">
+                                    <tr key={feedback1.id} className=" even:bg-slate-100 dark:even:bg-slate-700">
                                         <td className="table-td">
-                                            { package1.name }
+                                            { feedback1.name }
                                         </td>
                                         <td className="table-td">
-                                            { package1.price }
+                                            { feedback1.price }
                                         </td>
                                         <td className="table-td">
-                                            { package1.duration }
+                                            { feedback1.duration }
                                         </td>
                                         <td className="table-td">
                                             <div className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -76,7 +63,7 @@ const PackageList = ({packages}) => {
                                                     {actions.map((item, i) => (
                                                         <div
                                                             key={i}
-                                                            onClick={() => item.doit(package1)}
+                                                            onClick={() => item.doit(feedback1)}
                                                             className={`
                                                                 ${
                                                                     item.icon === "heroicons-outline:trash"
@@ -109,4 +96,4 @@ const PackageList = ({packages}) => {
     );
 };
 
-export default PackageList;
+export default PackageListStaff;
