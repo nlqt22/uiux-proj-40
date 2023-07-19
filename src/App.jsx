@@ -9,10 +9,14 @@ import { useSelector } from "react-redux";
 const Dashboard = lazy(() => import("./pages/dashboard"));
 const MemberListPage = lazy(() => import("./pages/member"));
 const PackageListPage = lazy(() => import ("./pages/package"));
+const RoomListPage = lazy(()=> import("./pages/room"))
 const StaffListPage  = lazy(() => import ("./pages/staff"));
 const AssetListPage  = lazy(() => import ("./pages/asset"));
-const StatisticPage  = lazy(() => import ("./pages/statistic"));
+
 const StaffDetailsPage  = lazy(() => import ("./pages/staff/StaffDetail"));
+const MemberDetailsPage  = lazy(() => import ("./pages/member/MemberDetail"));
+
+
 const Login = lazy(() => import("./pages/auth/login"));
 const Error = lazy(() => import("./pages/404"));
 
@@ -78,6 +82,14 @@ function App() {
 							</Suspense>
 						}
 					/>
+					<Route
+						path="member/:id"
+						element={
+							<Suspense fallback={<Loading />}>
+								<MemberDetailsPage />
+							</Suspense>
+						}
+					/>
 
 					<Route
 						path="asset"
@@ -88,10 +100,10 @@ function App() {
 						}
 					/>
 					<Route
-						path="transaction"
+						path="room"
 						element={
 							<Suspense fallback={<Loading />}>
-								<StatisticPage />
+								<RoomListPage />
 							</Suspense>
 						}
 					/>

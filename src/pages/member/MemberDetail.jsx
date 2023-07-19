@@ -1,23 +1,30 @@
 import React, { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
+
 import { Tab } from "@headlessui/react";
-import Feedback from "./feedback-table";
-import Member from  "./member-table";
 
-const StaffDetailsPage = () => {
+
+import Feedback_Room from "./member-detail/feedback-room";
+import Feedback_Staff from "./member-detail/feedback-staff";
+import Staff from "./member-detail/staff";
+import Payment from "./member-detail/payment";
+import Track from "./member-detail/track";
+
+const MemberDetailsPage = () => {
   const { id } = useParams();
-
   const buttons = [
-    { title: "Feedback" },
-    { title: "Member" },
+    { title: "Room Feedback" },
+    { title: "Staff Feedback" },
+    { title: "Your Staff" },
+    { title: "Payment" },
+    { title: "Track" },
   ];
-
   return (
-    <div className="space-y-5">
+    <div className=" space-y-5">
       <div className="grid grid-cols-12 gap-5">
         <Card
-          title="About Staff"
+          title="About project"
           className="xl:col-span-12 col-span-12 lg:col-span-12 h-full"
         >
           <div>
@@ -25,21 +32,21 @@ const StaffDetailsPage = () => {
               Background information
             </div>
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              This is some background information about the project. Replace
-              this text with your actual content.
+
             </p>
             <br />
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              More details about the project can be mentioned here. Feel free
-              to customize and replace this content.
+
             </p>
+        
+            
           </div>
         </Card>
       </div>
-
+      
       <div className="grid grid-cols-12 gap-5">
         <div className="xl:col-span-12 lg:col-span-7 col-span-12">
-          <Card title="Staff">
+        <Card title="Member">
             <Tab.Group>
               <Tab.List className="lg:space-x-8 md:space-x-4 space-x-0 rtl:space-x-reverse">
                 {buttons.map((item, i) => (
@@ -67,13 +74,31 @@ const StaffDetailsPage = () => {
                 <Tab.Panel>
                   <div className="text-slate-600 dark:text-slate-400 text-sm font-normal">
                     {/* Feedback component */}
-                    <Feedback />
+                    <Track />
                   </div>
                 </Tab.Panel>
                 <Tab.Panel>
                   <div className="text-slate-600 dark:text-slate-400 text-sm font-normal">
                     {/* Content for Tab 2 */}
-                    <Member />
+                    <Payment />
+                  </div>
+                </Tab.Panel>
+                <Tab.Panel>
+                  <div className="text-slate-600 dark:text-slate-400 text-sm font-normal">
+                    {/* Content for Tab 2 */}
+                    <Staff />
+                  </div>
+                </Tab.Panel>
+                <Tab.Panel>
+                  <div className="text-slate-600 dark:text-slate-400 text-sm font-normal">
+                    {/* Content for Tab 2 */}
+                    <Feedback_Staff />
+                  </div>
+                </Tab.Panel>
+                <Tab.Panel>
+                  <div className="text-slate-600 dark:text-slate-400 text-sm font-normal">
+                    {/* Content for Tab 2 */}
+                    <Feedback_Room />
                   </div>
                 </Tab.Panel>
               </Tab.Panels>
@@ -81,10 +106,11 @@ const StaffDetailsPage = () => {
           </Card>
         </div>
         <div className="xl:col-span-4 lg:col-span-5 col-span-12">
+         
         </div>
       </div>
     </div>
   );
 };
 
-export default StaffDetailsPage;
+export default MemberDetailsPage;

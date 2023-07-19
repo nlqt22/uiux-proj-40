@@ -20,7 +20,11 @@ export const menuItemsForAdmin = [
 		icon: "heroicons-outline:identification",
 		link: "member",
 	},
-
+	{
+		title: "Room",
+		icon: "heroicons:rectangle-stack",
+		link: "room",
+	},
 	{
 		title: "Asset",
 		icon: "heroicons-outline:folder-open",
@@ -31,10 +35,11 @@ export const menuItemsForAdmin = [
 		icon: "heroicons-outline:calendar",
 		link: "package",
 	},
+
 	{
-		title: "Transaction",
-		icon: "heroicons-outline:currency-dollar",
-		link: "transaction",
+		title: "Feedback",
+		icon: "heroicons:envelope-open",
+		link: "feedback",
 	},
 ];
 
@@ -88,11 +93,8 @@ export const menuItemsForSale = [
 		link: "package",
 	},
 
-	{
-		title: "Transaction",
-		icon: "heroicons-outline:currency-dollar",
-		link: "transaction",
-	},
+
+
 ];
 
 export const menuItemsForMember = [
@@ -107,11 +109,7 @@ export const menuItemsForMember = [
 		link: "dashboard",
 	},
 
-	{
-		title: "Transaction",
-		icon: "heroicons-outline:currency-dollar",
-		link: "transaction",
-	},
+
 ];
 
 export const menuItems = [
@@ -147,11 +145,7 @@ export const menuItems = [
 		icon: "heroicons-outline:calendar",
 		link: "package",
 	},
-	{
-		title: "Transaction",
-		icon: "heroicons-outline:currency-dollar",
-		link: "transaction",
-	},
+
 ];
 
 export const topMenu = [

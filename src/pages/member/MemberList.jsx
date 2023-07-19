@@ -10,8 +10,15 @@ const MemberList = ({members}) => {
         {
             name: "edit",
             icon: "heroicons:pencil-square",
-            doit: () => {
-                return null;
+            doit: (member) => {
+      
+            },
+          },
+        {
+            name: "view",
+            icon: "heroicons:eye",
+            doit: (member) => {
+                navigate(`/member/${member.id}`)
             },
         },
         {
@@ -75,7 +82,7 @@ const MemberList = ({members}) => {
                                                     {actions.map((item, i) => (
                                                         <div
                                                             key={i}
-                                                            onClick={() => item.doit()}
+                                                            onClick={() => item.doit(member)}
                                                             className={`
                                                                 ${
                                                                     item.icon === "heroicons-outline:trash"
