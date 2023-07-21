@@ -4,20 +4,31 @@ import useWidth from "@/hooks/useWidth";
 import MemberList from "./MemberList";
 import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
-import { fetchMembers } from "./store";
+import { fetchMembers, } from "./store";
 import { ToastContainer } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import AddMember from "./AddMember";
+import TodoHeader from "./TodoHeader";
 import { toggleAddModal } from "./store";
 
 
 
 const MemberListPage = () =>  {
-    const { members, status, error } = useSelector((state) => state.members);
+    const { members, status, error,membersSearch } = useSelector((state) => state.members);
     const { width, breakpoints } = useWidth();
 
     const { isAuth } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
+    
+    const filteredMembers = members
+    // search filteredTodos
+    .filter((members) => {
+      // filter based on searchTerm
+      if (membersSearch) {
+        return members.name.toLowerCase().includes(todoSearch.toLowerCase());
+      }
+      return true;
+    });
 
     useEffect(() => {
         dispatch(fetchMembers({page: 0, size: 5}));
@@ -29,7 +40,7 @@ const MemberListPage = () =>  {
         if(status === "loading") {
             return (
                 <div>
-                    <TableLoading count={members?.length}/>
+                    <TableLoading count={filteredMembers?.length}/>
                 </div>
             );
         }
@@ -42,6 +53,7 @@ const MemberListPage = () =>  {
                         <h4 className="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
                             Members
                         </h4>
+
                         <div
                             className={`${
                                 width < breakpoints.md ? "space-x-rb" : ""
@@ -57,7 +69,10 @@ const MemberListPage = () =>  {
                             />
                         </div>
                     </div>
-                    <MemberList members={ members } />
+                    <TodoHeader
+                            onChange={(e) => dispatch(setSearch(e.target.value))}
+                        />
+                    <MemberList members={ filteredMembers } />
                     <AddMember />
                 </div>
             );

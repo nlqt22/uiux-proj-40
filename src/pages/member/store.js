@@ -21,6 +21,7 @@ export const memberSlice = createSlice({
         isLoading: null,
         error: null,
         members: [],
+        memberSearch: "",
     },
     reducers: {
         toggleAddModal: (state, action) => {
@@ -40,6 +41,9 @@ export const memberSlice = createSlice({
                 theme: "light",
             });
         },
+        setMember: (state, action) => {
+            state.memberSearch = action.payload;
+          },
     },
     extraReducers: (builder) => {
         builder
@@ -59,5 +63,6 @@ export const memberSlice = createSlice({
 export const {
     toggleAddModal,
     pushMember,
+    setMember,
 } = memberSlice.actions;
 export default memberSlice.reducer;
