@@ -49,6 +49,15 @@ const StaffList = ({ staffs }) => {
                       Phone
                     </th>
                     <th scope="col" className="table-th">
+                      Identity Card
+                    </th>
+                    <th scope="col" className="table-th">
+                      Date of Birth
+                    </th>
+                    <th scope="col" className="table-th">
+                      Role
+                    </th>
+                    <th scope="col" className="table-th">
                       Action
                     </th>
                   </tr>
@@ -62,6 +71,9 @@ const StaffList = ({ staffs }) => {
                     >
                       <td className="table-td">{staff.fullName}</td>
                       <td className="table-td">{staff.phone}</td>
+                      <td className="table-td">{staff.identityCard}</td>
+                      <td className="table-td">{staff.dob}</td>
+                      <td className="table-td">{staff.role.name}</td>
                       <td className="table-td">
                         <div className="divide-y divide-slate-100 dark:divide-slate-800">
                           <div className="flex space-x-2 items-center rtl:space-x-reverse">

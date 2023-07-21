@@ -18,9 +18,14 @@ const MemberListPage = () =>  {
     const { members, status, error,memberSearch } = useSelector((state) => state.members);
     const { width, breakpoints } = useWidth();
 
-    const { isAuth } = useSelector((state) => state.auth)
+    const { isAuth, user } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
-    
+    useEffect(() => {
+        const requestBody = {
+            id: user.organzation_id,
+        }
+        dispatch(fetchMembers({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
+    }, [dispatch]);
     const filterMembers = members.filter((member) => {
         if (memberSearch) {
           const searchQuery = memberSearch.toLowerCase();
