@@ -4,19 +4,19 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API = "http://localhost:8080/api/v1/auth/login";
+const API = "http://localhost:9005/api/v1/auth/authenticate";
 
 
-export const handleLogin = (username, password) => async (dispatch) => {
+export const handleLogin = (email, password) => async (dispatch) => {
 	try {
-		const response = await axios.post(API, { username, password });
+		const response = await axios.post(API, { email, password });
 		if (response.status === 200) {
-		  	dispatch(handleLoginSuccess(response.data));
-			localStorage.setItem("user", JSON.stringify(response.data));
+		  	dispatch(handleLoginSuccess(response.data.access_token));
+			localStorage.setItem("token", JSON.stringify(response.data.access_token));
 		}
 	} catch (error) {
 		dispatch(handleLoginFailure());
-		toast.error("Wrong password or username", {
+		toast.error("Wrong password or email", {
 			position: "top-right",
 			autoClose: 1500,
 			hideProgressBar: false,

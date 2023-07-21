@@ -10,16 +10,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { handleLogin } from "./store";
 import { toast } from "react-toastify";
 import Dashboard from "../../dashboard";
+import Select from "@/components/ui/Select";
+
 
 const schema = yup.object({
-    username: yup
-        .string()
-        .required("Username is Required")
-        .test("is-phone-number", "Invalid phone number", (value) => {
-
-        const phoneNumberRegex = /^\d{10}$/;
-        return phoneNumberRegex.test(value);
-      }),
+    email: yup.string().email().required("Email is Required"),
     password: yup.string().required("Password is Required"),
     }).required()
 ;
@@ -46,7 +41,7 @@ const LoginForm = () => {
   
     const onSubmit = (data) => {
         try { 
-            dispatch(handleLogin(data.username, data.password));
+            dispatch(handleLogin(data.email, data.password));
         } catch(error) {
             console.log(error);
         }
@@ -61,12 +56,12 @@ const LoginForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
             <Textinput
-                name="username"
-                label="username"
+                name="email"
+                label="email"
                 type="text"
-                defaultValue="0948845856"
+                defaultValue=""
                 register={register}
-                error={errors.username}
+                error={errors.email}
                 className="h-[48px]"
             />
 
@@ -78,7 +73,12 @@ const LoginForm = () => {
                 error={errors.password}
                 className="h-[48px]"
             />
-
+            <Select
+                name="org"
+                options={["Option 1", "Option 2", "Option 3"]}
+                label="Select Option's"
+                register={register}
+          />
             <div className="flex justify-between">
             <Checkbox
                 value={checked}
