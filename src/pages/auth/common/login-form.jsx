@@ -11,6 +11,7 @@ import { handleLogin } from "./store";
 import { toast } from "react-toastify";
 import Dashboard from "../../dashboard";
 import Select from "@/components/ui/Select";
+import axios from 'axios';
 
 
 const schema = yup.object({
@@ -30,6 +31,19 @@ const LoginForm = () => {
         resolver: yupResolver(schema),
         mode: "all",
     });
+
+    const [options, setOptions] = useState([]);
+    
+    useEffect(() => {
+ 
+        axios.get('http://localhost:9005/api/v1/organizations')
+        .then(response => {
+            setOptions(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching options:', error);
+        });
+    }, []);
   
     const navigate = useNavigate();
 
@@ -75,10 +89,10 @@ const LoginForm = () => {
             />
             <Select
                 name="org"
-                options={["Option 1", "Option 2", "Option 3"]}
+                options={options}
                 label="Select Option's"
                 register={register}
-          />
+            />
             <div className="flex justify-between">
             <Checkbox
                 value={checked}
