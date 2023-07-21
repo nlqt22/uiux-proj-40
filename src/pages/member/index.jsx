@@ -8,31 +8,35 @@ import { fetchMembers, } from "./store";
 import { ToastContainer } from "react-toastify";
 import { Navigate } from "react-router-dom";
 import AddMember from "./AddMember";
-import TodoHeader from "./TodoHeader";
-import { toggleAddModal } from "./store";
+import SearchMember from "./SearchMember";
+import { toggleAddModal, setMember } from "./store";
+import EditMember from "./EditMember";
 
 
 
 const MemberListPage = () =>  {
-    const { members, status, error,membersSearch } = useSelector((state) => state.members);
+    const { members, status, error,memberSearch } = useSelector((state) => state.members);
     const { width, breakpoints } = useWidth();
 
     const { isAuth } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     
-    const filteredMembers = members
-    // search filteredTodos
-    .filter((members) => {
-      // filter based on searchTerm
-      if (membersSearch) {
-        return members.name.toLowerCase().includes(todoSearch.toLowerCase());
-      }
-      return true;
-    });
-
+    const filterMembers = members.filter((member) => {
+        if (memberSearch) {
+          const searchQuery = memberSearch.toLowerCase();
+          return (
+            member.fullName.toLowerCase().includes(searchQuery) ||
+            member.phone.includes(memberSearch) ||
+            member.identityCard.includes(memberSearch)
+          );
+        }
+        return true;
+      });
+      
     useEffect(() => {
         dispatch(fetchMembers({page: 0, size: 5}));
     }, [dispatch]);
+
 
     if(!isAuth) {
 		return <Navigate to="/login"/>;
@@ -40,7 +44,7 @@ const MemberListPage = () =>  {
         if(status === "loading") {
             return (
                 <div>
-                    <TableLoading count={filteredMembers?.length}/>
+                    <TableLoading count={filterMembers?.length}/>
                 </div>
             );
         }
@@ -69,11 +73,12 @@ const MemberListPage = () =>  {
                             />
                         </div>
                     </div>
-                    <TodoHeader
-                            onChange={(e) => dispatch(setSearch(e.target.value))}
+                    <SearchMember
+                            onChange={(e) => dispatch(setMember(e.target.value))}
                         />
-                    <MemberList members={ filteredMembers } />
+                    <MemberList members={ filterMembers } />
                     <AddMember />
+                    <EditMember />
                 </div>
             );
         }

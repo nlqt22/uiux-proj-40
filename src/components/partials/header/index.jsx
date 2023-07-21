@@ -8,7 +8,7 @@ import useNavbarType from "@/hooks/useNavbarType";
 import useMenulayout from "@/hooks/useMenulayout";
 import useSkin from "@/hooks/useSkin";
 import Logo from "./Tools/Logo";
-import SearchModal from "./Tools/SearchModal";
+
 import Profile from "./Tools/Profile";
 
 import useRtl from "@/hooks/useRtl";
@@ -91,7 +91,6 @@ const Header = ({ className = "custom-class" }) => {
                   <Icon icon="heroicons-outline:menu-alt-3" />
                 </div>
               )}
-              <SearchModal />
             </div>
           )}
           {/* For Horizontal  */}

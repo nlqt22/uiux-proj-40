@@ -1,12 +1,8 @@
 import React from "react";
 import Icon from "@/components/ui/Icon";
-import Dropdown from "@/components/ui/Dropdown";
-import { Menu } from "@headlessui/react";
-import useWidth from "@/hooks/useWidth";
-import { useDispatch, useSelector } from "react-redux";
-const TodoHeader = ({ onChange }) => {
 
-  const dispatch = useDispatch();
+const SearchMember = ({ onChange }) => {
+
   return (
     <div className="md:flex justify-between items-center sticky bg-white dark:bg-slate-800 top-0 pt-6 pb-4 px-6 z-[44] border-b border-slate-100 dark:border-slate-700 rounded-t-md">
       <div className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -19,7 +15,7 @@ const TodoHeader = ({ onChange }) => {
             <input
               onChange={onChange}
               type="text"
-              placeholder="Search Task"
+              placeholder="Search Member"
               className="bg-transparent text-sm font-regular text-slate-600 dark:text-slate-300 transition duration-150 rounded px-2 py-1 focus:outline-none"
             />
           </div>
@@ -29,4 +25,4 @@ const TodoHeader = ({ onChange }) => {
   );
 };
 
-export default TodoHeader;
+export default SearchMember;
