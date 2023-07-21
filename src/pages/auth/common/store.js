@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 const API = "http://localhost:9005/api/v1/auth/authenticate";
 
-
-export const handleLogin = (email, password) => async (dispatch) => {
+export const handleLogin = (email, password, organizationId) => async (dispatch) => {
 	try {
-		const response = await axios.post(API, { email, password });
+		console.log('organizationId', organizationId);
+		const response = await axios.post(API, { email, password, organizationId: organizationId.value });
 		if (response.status === 200) {
-		  	dispatch(handleLoginSuccess(response.data.access_token));
-			localStorage.setItem("token", JSON.stringify(response.data.access_token));
+			console.log(response.data);
+		  	dispatch(handleLoginSuccess(response.data));
+			localStorage.setItem("user", JSON.stringify(response.data));
 		}
 	} catch (error) {
 		dispatch(handleLoginFailure());

@@ -14,11 +14,14 @@ const StaffListPage = () =>  {
     const { staffs, status, error } = useSelector((state) => state.staffs);
     const { width, breakpoints } = useWidth();
 
-    const { isAuth } = useSelector((state) => state.auth)
+    const { isAuth, user } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchStaffs({page: 0, size: 5}));
+        const requestBody = {
+            id: user.organzation_id,
+        }
+        dispatch(fetchStaffs({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
     }, [dispatch]);
     if(!isAuth) {
 		return <Navigate to="/login"/>;

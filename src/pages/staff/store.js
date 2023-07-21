@@ -3,11 +3,16 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 
-const API = "http://localhost:8080/api/v1/staffs";
+const API = "http://localhost:9005/api/v1/staffs/sale";
 
-export const fetchStaffs = createAsyncThunk("staffs/fetchStaffs", async({ page, size }) => {
+export const fetchStaffs = createAsyncThunk("staffs/fetchStaffs", async({ page, size, requestBody, jwt }) => {
+    const headers = {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json',
+    }
     try {
-        const response = await axios.get(`${API}?page=${page}&size=${size}`);
+        console.log(headers);
+        const response = await axios.post(`${API}?page=${page}&size=${size}`, requestBody, { headers });
         console.log(response);
         return response.data.content;
     } catch(error) {
