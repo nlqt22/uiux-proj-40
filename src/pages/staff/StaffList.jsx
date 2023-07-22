@@ -11,7 +11,7 @@ const StaffList = ({ staffs }) => {
       name: "edit",
       icon: "heroicons:pencil-square",
       doit: (staff) => {
-
+        dispatch(removeMember(staff.id))
       },
     },
     {

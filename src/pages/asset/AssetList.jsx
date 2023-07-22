@@ -39,7 +39,16 @@ const AssetList = ({assets}) => {
                                     Full Name
                                 </th>
                                 <th scope="col" className=" table-th">
-                                    Status
+                                    Quantity
+                                </th>
+                                <th scope="col" className=" table-th">
+                                    Import Date
+                                </th>
+                                <th scope="col" className=" table-th">
+                                  Latest Updated
+                                </th>
+                                <th scope="col" className=" table-th">
+                                Origin
                                 </th>
                                 <th scope="col" className=" table-th">
                                     Action
@@ -55,7 +64,16 @@ const AssetList = ({assets}) => {
                                             { assets.name }
                                         </td>
                                         <td className="table-td">
-                                            { assets.status }
+                                            { assets.quantity }
+                                        </td>
+                                        <td className="table-td">
+                                            { assets.importDate }
+                                        </td>
+                                        <td className="table-td">
+                                            { assets.latestUpdated }
+                                        </td>
+                                        <td className="table-td">
+                                            { assets.origin }
                                         </td>
                                         <td className="table-td">
                                             <div className="divide-y divide-slate-100 dark:divide-slate-800">

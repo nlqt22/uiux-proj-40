@@ -15,11 +15,12 @@ const AssetListPage = () =>  {
     const { width, breakpoints } = useWidth();
 
     const dispatch = useDispatch();
-    const { isAuth } = useSelector((state) => state.auth)
+    const { isAuth,user } = useSelector((state) => state.auth)
 
 
     useEffect(() => {
-        dispatch(fetchAssets({page: 0, size: 5}));
+
+        dispatch(fetchAssets({page: 0, size: 5,  jwt: user.access_token }));
     }, [dispatch]);
 
     if(status === "loading") {

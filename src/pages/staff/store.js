@@ -95,6 +95,21 @@ export const staffSlice = createSlice({
     toggleAddModal: (state, action) => {
       state.openStaffModal = action.payload;
     },
+    removeMember: (state, action) => {
+      state.staffs = state.staffs.filter(
+        (item) => item.id !== action.payload
+      );
+      toast.warning("Remove Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    },
 
   },
   extraReducers: (builder) => {
@@ -126,5 +141,6 @@ export const staffSlice = createSlice({
   },
 });
 
-export const { toggleAddModal } = staffSlice.actions;
+export const { toggleAddModal,
+  removeMember} = staffSlice.actions;
 export default staffSlice.reducer;

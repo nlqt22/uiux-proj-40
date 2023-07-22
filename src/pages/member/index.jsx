@@ -17,7 +17,7 @@ import EditMember from "./EditMember";
 const MemberListPage = () =>  {
     const { members, status, error,memberSearch } = useSelector((state) => state.members);
     const { width, breakpoints } = useWidth();
-
+    
     const { isAuth, user } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     useEffect(() => {
@@ -27,7 +27,6 @@ const MemberListPage = () =>  {
                 sort: [
                   "string"
                 ]
-        
         }
         dispatch(fetchMembers({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
     }, [dispatch]);

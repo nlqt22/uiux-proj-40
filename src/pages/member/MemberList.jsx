@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editMember, removeMember } from "./store";
+import { toggleEditModal, removeMember } from "./store";
 const MemberList = ({members}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const MemberList = ({members}) => {
             name: "edit",
             icon: "heroicons:pencil-square",
             doit: (member) => {
-               dispatch(editMember(member))
+               dispatch(toggleEditModal(member))
             },
           },
         {

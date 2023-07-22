@@ -12,7 +12,7 @@ export const fetchMembers = createAsyncThunk("members/fetchMembers", async({ pag
     }
     try {
 
-        const response = await axios.post(API,requestBody,  {headers} );
+        const response = await axios.get(API, {headers} );
         console.log(response);
         return response.data.content;
     } catch(error) {
@@ -25,7 +25,7 @@ export const pushMember = createAsyncThunk("staffs/pushStaff", async ({ requestB
         Authorization: "Bearer " + jwt,
         "Content-Type": "application/json",
       };
-      
+
 
       const response = await axios.post(API_res, requestBody, { headers });
   
@@ -46,6 +46,35 @@ export const pushMember = createAsyncThunk("staffs/pushStaff", async ({ requestB
       throw error;
     }
   });
+  export const editMember = createAsyncThunk("members/editMember", async ({ requestBody, jwt, id }) => {
+    try {
+      const headers = {
+        Authorization: "Bearer " + jwt,
+        "Content-Type": "application/json",
+      };
+      let API_k = API+"/" + id;
+      console.log(requestBody);
+      const response = await axios.put(API_k, requestBody, { headers });
+  
+      toast.success("Add Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+  
+      // Return the response data to be used in the Redux state if needed
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  });
+
+  
 export const memberSlice = createSlice({
     name: "members",
     initialState: {
@@ -62,34 +91,19 @@ export const memberSlice = createSlice({
         toggleAddModal: (state, action) => {
             state.openMemberModal = action.payload;
         },
+        toggleEditModal: (state, action) => {
+          state.editModal = true;
+          state.editItem = action.payload;
+      },
       
         setMember: (state, action) => {
             state.memberSearch = action.payload;
           },
-        editMember: (state, action) => {
-            state.members.findIndex((item) => {
-
-              if (item.id === action.payload.id) {
-                console.log(item.id);
-                state.editItem = item;
-                state.editModal = !state.editModal;
-                // find index
-                // let index = state.todos.indexOf(item);
-                // state.todos.splice(index, 1, {
-
-                // //   id: action.payload.id,
-                // //   title: action.payload.title,
-                // //   isDone: action.payload.isDone,
-                // //   isfav: action.payload.isfav,
-                // //   image: action.payload.image,
-                // //   category: action.payload.category,
-                // });
-              }
-            });
-          },
+       
           closeEditModal: (state, action) => {
             state.editModal = action.payload;
           },
+
           removeMember: (state, action) => {
             state.members = state.members.filter(
               (item) => item.id !== action.payload
@@ -123,8 +137,9 @@ export const memberSlice = createSlice({
 });
 export const {
     toggleAddModal,
+    toggleEditModal,
     setMember,
-    editMember,
+    viewMember,
     closeEditModal,
     removeMember,
 } = memberSlice.actions;

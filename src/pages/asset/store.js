@@ -2,18 +2,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API = "http://localhost:8080/api/v1/assets";
+const API = "http://localhost:9005/api/v1/equipments";
 
-export const fetchAssets = createAsyncThunk("assets/fetchAssets", async({ page, size }) => {
+
+export const fetchAssets = createAsyncThunk("assets/fetchAssets", async({ page, size,requestBody, jwt }) => {
+    
+    const headers = {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json',
+    }
     try {
-        const response = await axios.get(`${API}?page=${page}&size=${size}`);
+
+        const response = await axios.get(API, {headers} );
         console.log(response);
         return response.data.content;
     } catch(error) {
         throw error;
     }
 });
-
 export const assetSlice = createSlice({
     name: "assets",
     initialState: {

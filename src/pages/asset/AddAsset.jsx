@@ -81,7 +81,52 @@ const AddAsset = () => {
                 onClose={() => dispatch(toggleAddModal(false))}
             >
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
-                   
+                <Textinput
+                        name="name"
+                        label="Name"
+                        placeholder=""
+                        register={register}
+                        error={errors.name}
+                    />
+                    <Textinput
+                        name="quatity"
+                        label="Quatity"
+                        placeholder=""
+                        register={register}
+                        error={errors.identity}
+                    />
+                     <FormGroup
+                        label="Date of Birth"
+                        id="default-picker"
+                        error={errors.dob}
+                    >
+                        <Controller
+                            name="dob"
+                            control={control}
+                            render={({ field }) => (
+                                <Flatpickr
+                                    className="form-control py-2"
+                                    id="default-picker"
+                                    placeholder=""
+                                    onChange={(date) => {
+                                        field.onChange(date);
+                                    }}
+                                    options={{
+                                        altInput: true,
+                                        altFormat: "F j, Y",
+                                        dateFormat: "Y-m-d",
+                                    }}
+                                />
+                            )}
+                        />
+                    </FormGroup>
+                    <Textinput
+                        name="identity"
+                        label="Identity Card"
+                        placeholder=""
+                        register={register}
+                        error={errors.identity}
+                    />
 
                     <div className="ltr:text-right rtl:text-left">
                         <button className="btn btn-dark text-center">

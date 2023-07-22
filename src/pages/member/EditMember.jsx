@@ -17,6 +17,7 @@ const FormValidationSchema = yup
     fullname: yup.string().required("Name is required"),
     phone: yup.string().required("Phone is required"),
     identity: yup.string().required("Identity Card is required"),
+    dob: yup.string().required("Date of birth is required")
 
   })
   .required();
@@ -27,7 +28,7 @@ const FormValidationSchema = yup
 const EditMember = () => {
   const { editModal, editItem } = useSelector((state) => state.members);
   const dispatch = useDispatch();
-
+  const { isAuth, user } = useSelector((state) => state.auth)
   const {
     register,
     control,
@@ -45,12 +46,14 @@ const EditMember = () => {
   }, [editItem]);
 
   const onSubmit = (data) => {
+    const member = {
+      fullName: data.fullname,
+      phone : data.phone,
+      identityCard : data.identity,
+      dob: data.dob,
+    }
     dispatch(
-        editMember({
-        id: editItem.id,
-
-
-      })
+      editMember({page: 0, size: 5, requestBody: member, jwt: user.access_token, id:editItem.id})
     );
     dispatch(closeEditModal(false));
     toast.info("Edit Successfully", {
@@ -144,6 +147,31 @@ const EditMember = () => {
           {errors.identity && (
             <div className="mt-2 text-danger-500 block text-sm">
               {errors.identity?.message}
+            </div>
+          )}
+        </div>
+        <div className={`fromGroup  ${errors.dob ? "has-error" : ""}`}>
+          <div className=" relative">
+            <label htmlFor="default-picker" className=" form-label">
+                DOB
+            </label>
+            <input
+              type="text"
+              defaultValue={editItem.dob}
+              {...register("dob")}
+              className="form-control py-2"
+            />
+            {errors.dob && (
+              <div className="flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2  space-x-1 rtl:space-x-reverse">
+                <span className="text-danger-500">
+                  <Icon icon="heroicons-outline:information-circle" />
+                </span>
+              </div>
+            )}
+          </div>
+          {errors.dob && (
+            <div className="mt-2 text-danger-500 block text-sm">
+              {errors.dob?.message}
             </div>
           )}
         </div>
