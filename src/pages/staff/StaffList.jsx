@@ -72,8 +72,8 @@ const StaffList = ({ staffs }) => {
                       <td className="table-td">{staff.fullName}</td>
                       <td className="table-td">{staff.phone}</td>
                       <td className="table-td">{staff.identityCard}</td>
-                      <td className="table-td">{staff.dob}</td>
-                      <td className="table-td">{staff.role.name}</td>
+                      <td className="table-td">{staff.dob.split("T")[0]}</td>
+                      <td className="table-td">{staff.account.role.name}</td>
                       <td className="table-td">
                         <div className="divide-y divide-slate-100 dark:divide-slate-800">
                           <div className="flex space-x-2 items-center rtl:space-x-reverse">

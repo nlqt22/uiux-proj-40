@@ -22,7 +22,12 @@ const MemberListPage = () =>  {
     const dispatch = useDispatch();
     useEffect(() => {
         const requestBody = {
-            id: user.organzation_id,
+                page: 0,
+                size: 5,
+                sort: [
+                  "string"
+                ]
+        
         }
         dispatch(fetchMembers({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
     }, [dispatch]);

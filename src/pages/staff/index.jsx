@@ -4,7 +4,8 @@ import useWidth from "@/hooks/useWidth";
 import StaffList from "./StaffList";
 import Button from "@/components/ui/Button";
 import TableLoading from "@/components/skeleton/Table";
-import { fetchStaffsSale } from "./store";
+import { fetchStaffsSale,fetchStaffsPt
+ } from "./store";
 import AddStaff from "./AddStaff";
 import { ToastContainer } from "react-toastify";
 import { toggleAddModal } from "./store";
@@ -24,13 +25,13 @@ const StaffListPage = () =>  {
         dispatch(fetchStaffsSale({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
     }, [dispatch]);
     
-    // useEffect(() => {
-    //     const requestBody = {
-    //         id: user.organization_id, // Corrected typo here
-    //     }
-    //     dispatch(fetchStaffsPt({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
-    // }, [dispatch]);
-    
+    useEffect(() => {
+        const requestBody = {
+            id: user.organization_id, // Corrected typo here
+        }
+        dispatch(fetchStaffsPt({page: 0, size: 5, requestBody: requestBody, jwt: user.access_token }));
+    }, [dispatch]);
+
     if(!isAuth) {
 		return <Navigate to="/login"/>;
     }

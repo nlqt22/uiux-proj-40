@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const API = "http://localhost:9005/api/v1/members";
-
+const API_res = "http://localhost:9005/api/v1/members/register"
 export const fetchMembers = createAsyncThunk("members/fetchMembers", async({ page, size,requestBody, jwt }) => {
     
     const headers = {
@@ -12,14 +12,40 @@ export const fetchMembers = createAsyncThunk("members/fetchMembers", async({ pag
     }
     try {
 
-        const response = await axios.post(`${API}/1&page=${page}&size=${size}`,requestBody,  {headers} );
+        const response = await axios.post(API,requestBody,  {headers} );
         console.log(response);
         return response.data.content;
     } catch(error) {
         throw error;
     }
 });
+export const pushMember = createAsyncThunk("staffs/pushStaff", async ({ requestBody, jwt, role }) => {
+    try {
+      const headers = {
+        Authorization: "Bearer " + jwt,
+        "Content-Type": "application/json",
+      };
+      
 
+      const response = await axios.post(API_res, requestBody, { headers });
+  
+      toast.success("Add Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+  
+      // Return the response data to be used in the Redux state if needed
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  });
 export const memberSlice = createSlice({
     name: "members",
     initialState: {
@@ -36,20 +62,7 @@ export const memberSlice = createSlice({
         toggleAddModal: (state, action) => {
             state.openMemberModal = action.payload;
         },
-        pushMember: (state, action) => {
-            state.members.unshift(action.payload);
-
-            toast.success("Add Successfully", {
-                position: "top-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-        },
+      
         setMember: (state, action) => {
             state.memberSearch = action.payload;
           },
@@ -110,7 +123,6 @@ export const memberSlice = createSlice({
 });
 export const {
     toggleAddModal,
-    pushMember,
     setMember,
     editMember,
     closeEditModal,

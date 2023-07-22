@@ -75,7 +75,7 @@ const MemberList = ({members}) => {
                                             { member.identityCard }
                                         </td>
                                         <td className="table-td">
-                                            { member.dob }
+                                            { member.dob.split("T")[0] }
                                         </td>
                                         <td className="table-td">
                                             <div className="divide-y divide-slate-100 dark:divide-slate-800">

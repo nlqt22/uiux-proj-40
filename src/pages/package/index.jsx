@@ -14,11 +14,11 @@ const PackageListPage = () =>  {
     const { packages, status, error } = useSelector((state) => state.packages);
     const { width, breakpoints } = useWidth();
 
-    const { isAuth } = useSelector((state) => state.auth)
+    const { user,isAuth } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchPackages({page: 0, size: 5}));
+        dispatch(fetchPackages({page: 0, size: 5, jwt: user.access_token }));
     }, [dispatch]);
     if(!isAuth) {
 		return <Navigate to="/login"/>;

@@ -12,23 +12,7 @@ import * as yup from "yup";
 
 import FormGroup from "@/components/ui/FormGroup";
 
-const styles = {
-    multiValue: (base, state) => {
-        return state.data.isFixed ? { ...base, opacity: "0.5" } : base;
-    },
-    multiValueLabel: (base, state) => {
-        return state.data.isFixed
-            ? { ...base, color: "#626262", paddingRight: 6 }
-            : base;
-    },
-    multiValueRemove: (base, state) => {
-        return state.data.isFixed ? { ...base, display: "none" } : base;
-    },
-    option: (provided, state) => ({
-        ...provided,
-        fontSize: "14px",
-    }),
-};
+
 
 
 
@@ -36,12 +20,14 @@ const AddMember = () => {
     const { openMemberModal } = useSelector((state) => state.members);
     const dispatch = useDispatch();
     const [dob, setStartDate] = useState(new Date());
-
+    const { isAuth, user } = useSelector((state) => state.auth)
 
     const FormValidationSchema = yup
         .object({
             name: yup.string().required("Full name is required"),
             identity: yup.string().required("Identity card is required"),
+            email: yup.string().required("Email is required"),
+            password: yup.string().required("Password is required"),
             phone: yup.string().required("Phone is required"),
             dob: yup
                 .date()
@@ -64,11 +50,14 @@ const AddMember = () => {
         const member = {
             fullName: data.name,
             phone: data.phone,
-            dob: dob.toISOString().split("T")[0],
+            email: data.email,
+            password: data.password,
+            dob: data.dob.toISOString().split("T")[0],
             identityCard: data.identity,
         };
-        dispatch(pushMember(member));
+        dispatch(pushMember({page: 0, size: 5, requestBody: member, jwt: user.access_token}));
         dispatch(toggleAddModal(false));
+        window.location.reload();
         reset();
     };
 
@@ -81,6 +70,20 @@ const AddMember = () => {
                 onClose={() => dispatch(toggleAddModal(false))}
             >
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
+                <Textinput
+                        name="email"
+                        label="Email"
+                        placeholder=""
+                        register={register}
+                        error={errors.email}
+                    />
+                    <Textinput
+                        name="password"
+                        label="Password"
+                        placeholder=""
+                        register={register}
+                        error={errors.password}
+                    />
                     <Textinput
                         name="name"
                         label="Full Name"
@@ -88,14 +91,7 @@ const AddMember = () => {
                         register={register}
                         error={errors.name}
                     />
-                    <Textinput
-                        name="phone"
-                        label="Phone"
-                        placeholder=""
-                        register={register}
-                        error={errors.phone}
-                    />
-                    <FormGroup
+                     <FormGroup
                         label="Date of Birth"
                         id="default-picker"
                         error={errors.dob}
@@ -108,7 +104,6 @@ const AddMember = () => {
                                     className="form-control py-2"
                                     id="default-picker"
                                     placeholder=""
-                                    // value={dob}
                                     onChange={(date) => {
                                         field.onChange(date);
                                     }}
@@ -128,6 +123,14 @@ const AddMember = () => {
                         register={register}
                         error={errors.identity}
                     />
+                    <Textinput
+                        name="phone"
+                        label="Phone"
+                        placeholder=""
+                        register={register}
+                        error={errors.phone}
+                    />
+          
 
                     <div className="ltr:text-right rtl:text-left">
                         <button className="btn btn-dark text-center">

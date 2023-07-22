@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import Modal from "@/components/ui/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddModal, pushStaff } from "./store";
@@ -20,17 +20,29 @@ const styles = {
 const AddStaff = () => {
     const { openStaffModal } = useSelector((state) => state.staffs);
     const dispatch = useDispatch();
-    const [options, setOptions] = useState([]);
-
-    const roleMappings = {
-    3: "SALE_STAFF",
-    4: "PT_STAFF",
-    };
-
-    const roles = options.map((option) => ({
-    value: option.id,
-    label: roleMappings[option.id],
-    }));
+    const [options, setOptions] = useState([
+        { id: 3 }, // Example role option with ID 3
+        { id: 4 }, // Example role option with ID 4
+      ]);
+      const roleMappings = {
+        3: "SALE_STAFF",
+        4: "PT_STAFF",
+      };
+      const { isAuth, user } = useSelector((state) => state.auth)
+      useEffect(() => {
+        // Update the roles whenever options change
+        if (options.length > 0) {
+          const roles = options.map((option) => ({
+            value: option.id,
+            label: roleMappings[option.id],
+          }));
+          setRoles(roles);
+          // Initialize selectedOption with the first role in the roles array
+          setSelectedOption(roles[0]);
+        }
+      }, [options]);
+    
+    const [roles, setRoles] = useState([]);
 
     const FormValidationSchema = yup
         .object({
@@ -62,12 +74,13 @@ const AddStaff = () => {
             phone: data.phone,
             email: data.email,
             password: data.password,
-            dob: dob.toISOString().split("T")[0],
+            dob: data.dob.toISOString().split("T")[0],
             identityCard: data.identity,
-            role: selectedOption,
+            
         };
-        dispatch(pushStaff(staff));
+        dispatch(pushStaff({page: 0, size: 5, requestBody: staff,role: selectedOption, jwt: user.access_token}));
         dispatch(toggleAddModal(false));
+        window.location.reload();
         reset();
     };
     const handleSelectChange = (selectedOption) => {
@@ -118,7 +131,6 @@ const AddStaff = () => {
                                     className="form-control py-2"
                                     id="default-picker"
                                     placeholder=""
-                                    // value={dob}
                                     onChange={(date) => {
                                         field.onChange(date);
                                     }}
@@ -145,7 +157,12 @@ const AddStaff = () => {
                         register={register}
                         error={errors.phone}
                     />
-                    <Select
+                    <div>
+                        <label htmlFor="options" className="form-label">
+                            Role
+                        </label>
+
+                        <Select
                         name="role"
                         className="react-select"
                         classNamePrefix="select"
@@ -155,6 +172,9 @@ const AddStaff = () => {
                         styles={styles}
                         id="options"
                 />
+            </div>
+                    
+
                     
 
                     <div className="ltr:text-right rtl:text-left">

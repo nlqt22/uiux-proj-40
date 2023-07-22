@@ -20,11 +20,7 @@ export const menuItemsForAdmin = [
 		icon: "heroicons-outline:identification",
 		link: "member",
 	},
-	{
-		title: "Room",
-		icon: "heroicons:rectangle-stack",
-		link: "room",
-	},
+
 	{
 		title: "Asset",
 		icon: "heroicons-outline:folder-open",

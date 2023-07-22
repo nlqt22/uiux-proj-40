@@ -40,6 +40,7 @@ export const roomSlice = createSlice({
                 theme: "light",
             });
         },
+        
     },
     extraReducers: (builder) => {
         builder
